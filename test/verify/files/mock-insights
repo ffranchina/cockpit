@@ -143,12 +143,10 @@ def insights_server(port):
         subprocess.check_call(["sscg"], cwd=certdir)
 
     httpd = HTTPServer(('', port), handler)
-    ssl_args = {
-        'certfile': f'{certdir}/service.pem',
-        'keyfile': f'{certdir}/service-key.pem',
-        'server_side': True,
-    }
-    httpd.socket = ssl.wrap_socket(httpd.socket, **ssl_args)
+    ctx = ssl.create_default_context(ssl.PROTOCOL_TLS_SERVER)
+    ctx.load_cert_chain('{certdir}/service.pem', f'{certdir}/service-key.pem')
+    ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+    httpd.socket = ctx.wrap_socket(httpd.socket, server_side=True)
     httpd.serve_forever()
 
 
