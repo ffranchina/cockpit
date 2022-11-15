@@ -171,6 +171,8 @@ def get_distfile(url, dist_map, webpack_name):
         else:
             sys.stderr.write(f"SKIP {url} -> {path}\n")
 
+    return None
+
 
 def grow_array(arr, size, val):
     if len(arr) < size:

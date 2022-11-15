@@ -42,6 +42,8 @@ def get_clevis_config_from_protected_header(protected_header):
         else:
             return {"pin": pin, pin: {}}
 
+    return None
+
 
 def get_clevis_config_from_jwe(jwe):
     return get_clevis_config_from_protected_header(jwe.split(".")[0])
