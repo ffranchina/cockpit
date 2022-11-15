@@ -171,7 +171,7 @@ class TestRunTest(MachineCase):
         affected_testfile = os.path.join(VERIFY_DIR, "check-shell-testlib")
         new_content = original_test.replace("class Test", "class NeinTest")
         writeFile(affected_testfile, new_content.replace("class NeinTestRetryExample", "class TestShell"))
-        os.chmod(affected_testfile, 0o555)
+        os.chmod(affected_testfile, 0o500)
         self.addCleanup(os.unlink, affected_testfile)
 
         process = subprocess.run([run_tests, "--test-dir", VERIFY_DIR,
@@ -203,7 +203,7 @@ class TestSystemd(unittest.TestCase):
     def testBasic(self):
         self.assertTrue(True)
         """)
-        os.chmod(affected_testfile, 0o555)
+        os.chmod(affected_testfile, 0o500)
         self.addCleanup(os.unlink, affected_testfile)
 
         process = subprocess.run([run_tests, "--test-dir", VERIFY_DIR, "TestSystemd.testBasic"],
